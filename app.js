@@ -5,10 +5,19 @@ function getDogPics(number) {
   else {
     fetch(`https://dog.ceo/api/breeds/image/random/${number}`)
     .then(response => response.json())
-    .then(responseJson => console.log(responseJson));
+    .then(responseJson => displayFetchedResults(responseJson))
+    .catch(error => alert("Request not sent try again later"));
   }
 }
+function displayFetchedResults(responseJson) {
+  $('.results').html('');
 
+  responseJson.message.forEach(function(fetchedImage) {
+    $('.results').append(`<img src='${fetchedImage}' class='results-img'>`);
+  });
+
+  $(".results").removeClass("hidden");
+}
 function watchSubmit() {
   $('.generate_dog_form').submit(event => {
     event.preventDefault();
